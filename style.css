@@ -10,7 +10,7 @@ body{
     padding-right:8%;
 }
 .calculator{
-    background-color:#E5989E;
+    background-color:#fc9f9f;
     display:flex;
     flex-direction: column;
     align-self: center;
