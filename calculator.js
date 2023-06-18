@@ -26,18 +26,37 @@ function del(display){
     let n_string = n.join("");
     display.innerHTML= n_string;
 }
-
+function too_many_dots(slice){
+    console.log(slice.match(/./gi));
+    console.log(slice.match(/./gi).length);
+    console.log(slice);
+    if (slice.match(".").length>1){
+        console.log('oye');
+        return true;
+    }else{
+        return false;
+    }
+}
 function operate(full_s){
     Array.from(full_s);
     let copy  = full_s;
     let found = false;
     let op_num = null;
     let sol = null;
+    let too_many_d = false;
     for(let l = 0 ; l<full_s.length;l++){
         let letter = full_s[l];
         if(letter == '+'){
-            num1 = Number(full_s.slice(0,l));
+            num1_s = full_s.slice(0,l);
+            console.log(num1_s + "r");
+            console.log(typeof(num1_s))
+            too_many_d = too_many_dots(num1_s);
+            if (too_many_d == true){
+                break;
+            }
+            num1 = Number(num1_s);
             num2 = Number(full_s.slice(l+1));
+            too_many_d = too_many_dots(num1.toString());
             sol = add(num1,num2);
             found = true;
             console.log('num1' + num1);
@@ -48,7 +67,9 @@ function operate(full_s){
             let negative = copy[l-1]=='+' || copy[l-1]=='-' || copy[l-1]=='x'|| copy[l-1]=='/';
             if(l>0 && !negative){
             num1 = Number(full_s.slice(0,l));
+            too_many_d = too_many_dots(num1.toString());
             num2 = Number(full_s.slice(l+1));
+            too_many_d = too_many_dots(num1.toString());
             sol =sub(num1,num2);
             found = true;
             op_num = op_num+1;
@@ -56,14 +77,18 @@ function operate(full_s){
     
         }else if (letter == 'x'){
             num1 = Number(full_s.slice(0,l));
+            too_many_d = too_many_dots(num1.toString());
             num2 = Number(full_s.slice(l+1));
+            too_many_d = too_many_dots(num1.toString());
             sol =mult(num1,num2);
             found = true;
             op_num = op_num+1;
 
         }else if (letter == '/'){
             num1 = Number(full_s.slice(0,l));
+            too_many_d = too_many_dots(num1.toString());
             num2 = Number(full_s.slice(l+1));
+            too_many_d = too_many_dots(num1.toString());
             sol=div(num1,num2).toFixed(4);
             found = true;
             op_num = op_num+1;
@@ -76,9 +101,11 @@ function operate(full_s){
     if (op_num >1){
         alert("You can only have one operator at a time!");
     }
+    if (too_many_d == true){
+        alert("too many dots!");
+        }
 
     document.getElementById('disp').innerHTML=sol;
-    console.log('solution'+sol);
     found = false;
 }
 
