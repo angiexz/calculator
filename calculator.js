@@ -27,14 +27,13 @@ function del(display){
     display.innerHTML= n_string;
 }
 function too_many_dots(slice){
-    console.log(slice.match(/./gi));
-    console.log(slice.match(/./gi).length);
-    console.log(slice);
-    if (slice.match(".").length>1){
-        console.log('oye');
-        return true;
+    let a = slice.match(/\./gi);
+    if (a!=null){
+        if (slice.match(/\./gi).length>1){
+            console.log('oye');
+            return true;
+    }
     }else{
-        return false;
     }
 }
 function operate(full_s){
@@ -48,15 +47,23 @@ function operate(full_s){
         let letter = full_s[l];
         if(letter == '+'){
             num1_s = full_s.slice(0,l);
-            console.log(num1_s + "r");
-            console.log(typeof(num1_s))
+            num2_s = full_s.slice(l+1);
+            too_many_d = too_many_dots(num2_s);
             too_many_d = too_many_dots(num1_s);
+
             if (too_many_d == true){
+                found=true;
+                break;
+            }
+
+            too_many_d = too_many_dots(num2_s);
+            if (too_many_d == true){
+                found=true;
                 break;
             }
             num1 = Number(num1_s);
-            num2 = Number(full_s.slice(l+1));
-            too_many_d = too_many_dots(num1.toString());
+            num2 = Number(num2_s);
+ 
             sol = add(num1,num2);
             found = true;
             console.log('num1' + num1);
@@ -66,29 +73,68 @@ function operate(full_s){
         }else if (letter == '-'){
             let negative = copy[l-1]=='+' || copy[l-1]=='-' || copy[l-1]=='x'|| copy[l-1]=='/';
             if(l>0 && !negative){
-            num1 = Number(full_s.slice(0,l));
-            too_many_d = too_many_dots(num1.toString());
-            num2 = Number(full_s.slice(l+1));
-            too_many_d = too_many_dots(num1.toString());
+                num1_s = full_s.slice(0,l);
+                num2_s = full_s.slice(l+1);
+                too_many_d = too_many_dots(num2_s);
+                too_many_d = too_many_dots(num1_s);
+    
+                if (too_many_d == true){
+                    found=true;
+                    break;
+                }
+    
+                too_many_d = too_many_dots(num2_s);
+                if (too_many_d == true){
+                    found=true;
+                    break;
+                }
+                num1 = Number(num1_s);
+                num2 = Number(num2_s);
             sol =sub(num1,num2);
             found = true;
             op_num = op_num+1;
             }
     
         }else if (letter == 'x'){
-            num1 = Number(full_s.slice(0,l));
-            too_many_d = too_many_dots(num1.toString());
-            num2 = Number(full_s.slice(l+1));
-            too_many_d = too_many_dots(num1.toString());
+            num1_s = full_s.slice(0,l);
+            num2_s = full_s.slice(l+1);
+            too_many_d = too_many_dots(num2_s);
+            too_many_d = too_many_dots(num1_s);
+
+            if (too_many_d == true){
+                found=true;
+                break;
+            }
+
+            too_many_d = too_many_dots(num2_s);
+            if (too_many_d == true){
+                found=true;
+                break;
+            }
+            num1 = Number(num1_s);
+            num2 = Number(num2_s);
             sol =mult(num1,num2);
             found = true;
             op_num = op_num+1;
 
         }else if (letter == '/'){
-            num1 = Number(full_s.slice(0,l));
-            too_many_d = too_many_dots(num1.toString());
-            num2 = Number(full_s.slice(l+1));
-            too_many_d = too_many_dots(num1.toString());
+            num1_s = full_s.slice(0,l);
+            num2_s = full_s.slice(l+1);
+            too_many_d = too_many_dots(num2_s);
+            too_many_d = too_many_dots(num1_s);
+
+            if (too_many_d == true){
+                found=true;
+                break;
+            }
+
+            too_many_d = too_many_dots(num2_s);
+            if (too_many_d == true){
+                found=true;
+                break;
+            }
+            num1 = Number(num1_s);
+            num2 = Number(num2_s);
             sol=div(num1,num2).toFixed(4);
             found = true;
             op_num = op_num+1;
